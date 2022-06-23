@@ -1,21 +1,9 @@
 from py2neo import Graph
 from gds_admin import gds
 import logging
+from pagerank.share import generate_JSON, generate_communities
 
 logger = logging.getLogger('ftpuploader')
-
-
-def generate_JSON(query):
-    graphpy2neo = Graph("bolt://localhost:7687", auth=("neo4j", "1234"))
-    jsonized = graphpy2neo.run(query).data()
-    return jsonized
-
-
-def generate_communities(query):
-    community = gds.run_cypher(
-        query
-    )
-    return community
 
 
 def project(comm):
@@ -99,7 +87,7 @@ def check_converge(comm, skill_inp):
     print(convergeCheck)
 
 
-def generate_graph():
+def generate_skill_graph():
     G, res = gds.graph.project(
         "skillSimilarity",
         ["Person", "Skill"],
@@ -166,7 +154,5 @@ def betweenness_centrality(network_graph):
     )
     print(betweenness)
 
-
 # betweenness_centrality('skillSimilarity')
 # UI intro: our mostly utilized skill is Docker. So learn Docker if ur a software engineer!
-
